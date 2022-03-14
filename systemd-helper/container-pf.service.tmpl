@@ -1,0 +1,8 @@
+[Unit]
+After=docker.service ufw.service
+
+[Service]
+ExecStart=__CURRENT_DIR__/iptables-add-forward
+
+[Install]
+WantedBy=default.target

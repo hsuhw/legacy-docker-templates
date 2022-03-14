@@ -1,0 +1,23 @@
+#!/bin/bash
+
+readonly HOST_IP=
+
+#iptables -t nat -I PREROUTING 1 -p tcp -d "${HOST_IP}" --dport 3306 -j DNAT --to 10.0.0.1:3306
+#iptables -t nat -I PREROUTING 1 -p tcp -d "${HOST_IP}" --dport 636 -j DNAT --to 10.0.0.1:636
+#iptables -t nat -I PREROUTING 1 -p tcp -d "${HOST_IP}" --dport 587 -j DNAT --to 10.0.0.1:587
+iptables -t nat -I PREROUTING 1 -p tcp -d "${HOST_IP}" --dport 443 -j DNAT --to 10.0.0.1:443
+iptables -t nat -I PREROUTING 1 -p tcp -d "${HOST_IP}" --dport 80 -j DNAT --to 10.0.0.1:80
+#iptables -t nat -I PREROUTING 1 -p udp -d "${HOST_IP}" --dport 67 -j DNAT --to 10.0.0.1:67
+#iptables -t nat -I PREROUTING 1 -p tcp -d "${HOST_IP}" --dport 53 -j DNAT --to 10.0.0.1:53
+#iptables -t nat -I PREROUTING 1 -p udp -d "${HOST_IP}" --dport 53 -j DNAT --to 10.0.0.1:53
+#iptables -t nat -I PREROUTING 1 -p tcp -d "${HOST_IP}" --dport 25 -j DNAT --to 10.0.0.1:25
+
+#iptables -t nat -I OUTPUT 1 -p tcp -d "${HOST_IP}" --dport 3306 -j DNAT --to 10.0.0.1:3306
+#iptables -t nat -I OUTPUT 1 -p tcp -d "${HOST_IP}" --dport 636 -j DNAT --to 10.0.0.1:636
+#iptables -t nat -I OUTPUT 1 -p tcp -d "${HOST_IP}" --dport 587 -j DNAT --to 10.0.0.1:587
+iptables -t nat -I OUTPUT 1 -p tcp -d "${HOST_IP}" --dport 443 -j DNAT --to 10.0.0.1:443
+iptables -t nat -I OUTPUT 1 -p tcp -d "${HOST_IP}" --dport 80 -j DNAT --to 10.0.0.1:80
+#iptables -t nat -I OUTPUT 1 -p udp -d "${HOST_IP}" --dport 67 -j DNAT --to 10.0.0.1:67
+#iptables -t nat -I OUTPUT 1 -p tcp -d "${HOST_IP}" --dport 53 -j DNAT --to 10.0.0.1:53
+#iptables -t nat -I OUTPUT 1 -p udp -d "${HOST_IP}" --dport 53 -j DNAT --to 10.0.0.1:53
+#iptables -t nat -I OUTPUT 1 -p tcp -d "${HOST_IP}" --dport 25 -j DNAT --to 10.0.0.1:25
