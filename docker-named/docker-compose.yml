@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  main:
+    image: sameersbn/bind:${MAIN_IMG_VERSION}
+    ports:
+      - "${FACADE_INTERFACE}:53:53/tcp"
+      - "${FACADE_INTERFACE}:53:53/udp"
+    volumes:
+      - ./volumes/data:/data
+    environment:
+      - WEBMIN_ENABLED=false
+    restart: unless-stopped
