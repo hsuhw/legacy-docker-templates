@@ -1,0 +1,14 @@
+ARG PYTHON_IMG_VERSION=3.6-stretch
+FROM python:${PYTHON_IMG_VERSION}
+
+RUN apt-get update \ 
+&& apt-get install -y wget \
+&& wget https://cvc4.cs.stanford.edu/downloads/builds/x86_64-linux-opt/cvc4-1.6-x86_64-linux-opt \
+&& mv cvc4-1.6-x86_64-linux-opt /usr/bin/cvc4 \
+&& chmod +x /usr/bin/cvc4 \
+&& apt-get remove -y wget unzip \
+&& rm -rf /var/lib/apt/lists/*
+
+# Download the benchmark problem sets
+WORKDIR /data
+CMD ["bash"]

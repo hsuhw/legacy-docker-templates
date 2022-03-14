@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  z3:
+    build:
+      context: .
+      dockerfile: Dockerfile.z3
+    volumes:
+      - ../volumes/benchmarks:/usr/share/workspace/benchmarks
+
+  cvc4:
+    build:
+      context: .
+      dockerfile: Dockerfile.cvc4
+    volumes:
+      - ../volumes/benchmarks:/usr/share/workspace/benchmarks
+
+  s3p:
+    build:
+      context: .
+      dockerfile: Dockerfile.s3p
+    volumes:
+      - ../volumes/benchmarks:/usr/share/workspace/benchmarks
+
+  trau:
+    build:
+      context: .
+      dockerfile: Dockerfile.trau
+    volumes:
+      - ../volumes/benchmarks:/usr/share/workspace/benchmarks
