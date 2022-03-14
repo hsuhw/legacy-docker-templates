@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+  main:
+    image: mysql:${MYSQL_IMG_VERSION}
+    networks:
+      - default
+      - lewatch
+    ports:
+      - "${FACADE_INTERFACE}:3306:3306"
+    extra_hosts:
+      - "${FACADE_DOMAIN}:${FACADE_INTERFACE}"
+    volumes:
+      - ./volumes/data:/var/lib/mysql
+      - ./volumes/config:/etc/mysql/conf.d
+      - ./volumes/initdb:/docker-entrypoint-initdb.d
+      - ./volumes/scripts:/scripts
+      - ${SSL_CRT_DIR}/${SERVER_DOMAIN}:/cert:ro
+    environment:
+      - TZ=CST-8
+      - VIRTUAL_HOST=${SERVER_DOMAIN}
+      - LETSENCRYPT_HOST=${SERVER_DOMAIN}
+      - LETSENCRYPT_EMAIL=${LETSENCRYPT_CONTACT_EMAIL}
+      - MYSQL_ROOT_PASSWORD=UseOnlyOnce
+      - MYSQL_ONETIME_PASSWORD=yes
+    command: mysqld
+    entrypoint:
+      - sh
+      - /scripts/alt_entry.sh
+    restart: unless-stopped
+
+networks:
+  lewatch:
+    external:
+      name: hostproxy_default

@@ -1,0 +1,8 @@
+.env
+volumes/*
+!volumes/config
+volumes/config/my.cnf.paused
+!volumes/scripts
+!volumes/initdb
+volumes/initdb/*
+!volumes/initdb/.gitkeep
