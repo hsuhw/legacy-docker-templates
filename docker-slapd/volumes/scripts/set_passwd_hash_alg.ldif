@@ -1,0 +1,12 @@
+
+# Load the relative module
+dn: cn=module{0},cn=config
+changetype: modify
+add: olcModuleLoad
+olcModuleLoad: pw-sha2.la
+
+# Set default password hash algorithm to be SSHA-256
+dn: olcDatabase={-1}frontend,cn=config
+changetype: modify
+add: olcPasswordHash
+olcPasswordHash: {SSHA512}

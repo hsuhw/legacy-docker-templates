@@ -1,0 +1,139 @@
+
+# Add directory nodes for user collections
+
+dn: ou=Users,__BASE_DN__
+changetype: add
+objectClass: organizationalUnit
+objectClass: top
+ou: Users
+description: Users in the intranet
+
+dn: ou=Droids,ou=Users,__BASE_DN__
+changetype: add
+objectClass: organizationalUnit
+objectClass: top
+ou: Droids
+description: Supportive non-human users
+
+dn: ou=Staff,ou=Users,__BASE_DN__
+changetype: add
+objectClass: organizationalUnit
+objectClass: top
+ou: Staff
+description: Staff users
+
+dn: ou=Basic,ou=Users,__BASE_DN__
+changetype: add
+objectClass: organizationalUnit
+objectClass: top
+ou: Basic
+description: Generally for student users
+
+dn: cn=dummy,ou=Droids,ou=Users,__BASE_DN__
+changetype: add
+gidNumber: 10000
+objectClass: posixAccount
+objectClass: top
+objectClass: account
+uidNumber: 10001
+uid: dummy
+loginShell: /bin/nologin
+homeDirectory: /home/dummy
+cn: dummy
+description: A dummy user for creation time references
+
+# Add directory nodes for General logic groups
+
+dn: ou=Groups,__BASE_DN__
+changetype: add
+objectClass: organizationalUnit
+objectClass: top
+ou: Groups
+description: General logic groups that characterize users
+
+dn: cn=Bachelor,ou=Groups,__BASE_DN__
+changetype: add
+objectClass: groupOfUniqueNames
+objectClass: top
+uniqueMember: cn=dummy,ou=Droids,ou=Users,__BASE_DN__
+cn: Bachelor
+description: Students in bba program
+
+dn: cn=Master,ou=Groups,__BASE_DN__
+changetype: add
+objectClass: groupOfUniqueNames
+objectClass: top
+uniqueMember: cn=dummy,ou=Droids,ou=Users,__BASE_DN__
+cn: Master
+description: Students in mba program
+
+dn: cn=Doctorate,ou=Groups,__BASE_DN__
+changetype: add
+objectClass: groupOfUniqueNames
+objectClass: top
+uniqueMember: cn=dummy,ou=Droids,ou=Users,__BASE_DN__
+cn: Doctorate
+description: Students in phd program
+
+dn: cn=ExecutiveMaster,ou=Groups,__BASE_DN__
+changetype: add
+objectClass: groupOfUniqueNames
+objectClass: top
+uniqueMember: cn=dummy,ou=Droids,ou=Users,__BASE_DN__
+cn: ExecutiveMaster
+description: Students in emba program
+
+dn: cn=MailActive,ou=Groups,__BASE_DN__
+changetype: add
+objectClass: groupOfUniqueNames
+objectClass: top
+uniqueMember: cn=dummy,ou=Droids,ou=Users,__BASE_DN__
+cn: MailActive
+description: Allow accessing the mail service
+
+dn: cn=RemoteLoginActive,ou=Groups,__BASE_DN__
+changetype: add
+objectClass: groupOfUniqueNames
+objectClass: top
+uniqueMember: cn=dummy,ou=Droids,ou=Users,__BASE_DN__
+cn: RemoteLoginActive
+description: Allow accessing the workstations
+
+dn: cn=PrintActive,ou=Groups,__BASE_DN__
+changetype: add
+objectClass: groupOfUniqueNames
+objectClass: top
+uniqueMember: cn=dummy,ou=Droids,ou=Users,__BASE_DN__
+cn: PrintActive
+description: Allow accessing the print service
+
+# Add directory nodes for POSIX groups
+
+dn: ou=POSIXGroups,__BASE_DN__
+changetype: add
+objectClass: organizationalUnit
+objectClass: top
+ou: POSIXGroups
+description: POSIX groups in the intranet
+
+dn: cn=droids,ou=POSIXGroups,__BASE_DN__
+changetype: add
+gidNumber: 10000
+objectClass: posixGroup
+objectClass: top
+cn: droids
+memberUid: dummy
+
+dn: cn=staff,ou=POSIXGroups,__BASE_DN__
+changetype: add
+gidNumber: 20000
+objectClass: posixGroup
+objectClass: top
+cn: staff
+
+dn: cn=basic,ou=POSIXGroups,__BASE_DN__
+changetype: add
+gidNumber: 30000
+objectClass: posixGroup
+objectClass: top
+cn: basic

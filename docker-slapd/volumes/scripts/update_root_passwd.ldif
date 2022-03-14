@@ -1,0 +1,12 @@
+
+# Set LDAP directory root password
+dn: olcDatabase={1}hdb,cn=config
+changetype: modify
+replace: olcRootPW
+olcRootPW: __ADMIN_PASSWORD_HASH__
+
+# Set LDAP config root password
+dn: olcDatabase={0}config,cn=config
+changetype: modify
+replace: olcRootPW
+olcRootPW: __CONFIG_PASSWORD_HASH__

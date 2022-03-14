@@ -1,0 +1,6 @@
+
+# Set LDAP directory admin password
+dn: cn=admin,__BASE_DN__
+changetype: modify
+replace: userPassword
+userPassword: __ADMIN_PASSWORD_HASH__

@@ -1,0 +1,14 @@
+
+# Load the relative module
+dn: cn=module{0},cn=config
+changetype: modify
+add: olcModuleLoad
+olcModuleLoad: ppolicy.la
+
+# Set password policy on hashing cleartext input to be true
+dn: olcOverlay=ppolicy,olcDatabase={1}hdb,cn=config
+changetype: add
+objectClass: olcOverlayConfig
+objectClass: olcPPolicyConfig
+olcOverlay: ppolicy
+olcPPolicyHashCleartext: TRUE

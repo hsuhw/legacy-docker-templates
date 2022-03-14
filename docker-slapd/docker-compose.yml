@@ -1,0 +1,58 @@
+version: "2"
+
+services:
+  main:
+    image: osixia/openldap:${MAIN_IMG_VERSION}
+    hostname: ${LDAP_SERVER_DOMAIN}
+    networks:
+      - default
+      - lewatch
+    ports:
+      - "${FACADE_INTERFACE}:636:636"
+    extra_hosts:
+      - "${FACADE_DOMAIN}:${FACADE_INTERFACE}"
+    volumes:
+      - ./volumes/cert:/container/service/slapd/assets/certs
+      - ./volumes/config:/etc/ldap/slapd.d
+      - ./volumes/data:/var/lib/ldap
+      - ./volumes/scripts:/scripts:ro
+      - ${LDAP_TLS_CRT_DIR}/${LDAP_SERVER_DOMAIN}:/cert:ro
+    environment:
+      - TZ=CST-8
+      - VIRTUAL_HOST=${LDAP_SERVER_DOMAIN}
+      - LETSENCRYPT_HOST=${LDAP_SERVER_DOMAIN}
+      - LETSENCRYPT_EMAIL=${LETSENCRYPT_CONTACT_EMAIL}
+      - LDAP_ORGANISATION=${LDAP_ORGANIZATION}
+      - LDAP_DOMAIN=${LDAP_DIR_DOMAIN}
+      - LDAP_TLS_CIPHER_SUITE=NORMAL
+      - LDAP_TLS_VERIFY_CLIENT=never
+      - LDAP_TLS_CRT_FILENAME=${LDAP_TLS_CRT_FILENAME}
+      - LDAP_TLS_KEY_FILENAME=${LDAP_TLS_KEY_FILENAME}
+      - LDAP_TLS_CA_CRT_FILENAME=${LDAP_TLS_CA_CRT_FILENAME}
+      - LDAP_ADMIN_PASSWORD=${LDAP_ADMIN_PASSWORD}
+      - LDAP_CONFIG_PASSWORD=${LDAP_CONFIG_PASSWORD}
+      - LDAP_READONLY_USER=${LDAP_READONLY_USER_ENABLE}
+      - LDAP_READONLY_USER_USERNAME=${LDAP_READONLY_USER}
+      - LDAP_READONLY_USER_PASSWORD=${LDAP_READONLY_USER_PASSWORD}
+    entrypoint:
+      - /container/tool/run
+      - --copy-service
+    restart: unless-stopped
+
+  backup:
+    image: osixia/openldap-backup:${BACKUP_IMG_VERSION}
+    depends_on:
+      - main
+    volumes:
+      - ${LDAP_BACKUP_OUTPUT_DIR}:/data/backup
+    environment:
+      - TZ=CST-8
+      - LDAP_BACKUP_CONFIG_CRON_EXP=0 4 * * *
+      - LDAP_BACKUP_DATA_CRON_EXP=10 4 * * *
+      - LDAP_BACKUP_TTL=${LDAP_BACKUP_TTL}
+    restart: unless-stopped
+
+networks:
+  lewatch:
+    external:
+      name: hostproxy_default

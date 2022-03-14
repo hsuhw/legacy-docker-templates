@@ -1,0 +1,4 @@
+.env
+bak/
+volumes/*
+!volumes/scripts/
